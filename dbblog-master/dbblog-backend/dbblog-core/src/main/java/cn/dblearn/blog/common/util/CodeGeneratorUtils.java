@@ -73,7 +73,7 @@ public class CodeGeneratorUtils {
         dsc.setUrl("jdbc:mysql://localhost:3306/dbblog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("1234");
+        dsc.setPassword("1721buaa");
         mpg.setDataSource(dsc);
 
         // 包配置

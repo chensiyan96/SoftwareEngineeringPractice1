@@ -5,7 +5,7 @@ spring:
     druid:
       url: jdbc:mysql://localhost:3306/dbblog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: root
-      password:
+      password: 1721buaa
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -46,7 +46,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 127.0.0.1:9300
+      cluster-nodes: 47.94.106.116:9300
   # rabbitMQ配置
   rabbitmq:
     host: 127.0.0.1
