@@ -30,4 +30,9 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     List<Integer> queryAllMenuId(Integer userId);
+
+    /**
+     * 查询是否存在用户
+     */
+    boolean queryExists(String username, String email);
 }

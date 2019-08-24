@@ -8,6 +8,8 @@ import cn.dblearn.blog.common.util.RedisUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
@@ -28,6 +30,9 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Autowired
+    private JavaMailSenderImpl mailSender;
 
     /**
      * 验证码过期时长5秒
@@ -56,6 +61,18 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         return producer.createImage(code);
     }
 
+    private void mailSender(String checkCode, String mailAddr) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setSubject("通知by-OurBlog");
+        message.setText("OurBlog：您的验证码为" + checkCode);
+
+        message.setTo(mailAddr);
+        message.setFrom("3365221601@qq.com");
+
+        mailSender.send(message);
+    }
+
     /**
      * 获取注册邮箱验证码
      */
@@ -66,7 +83,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         //生成文字验证码
         String code = (new Integer((int) ((Math.random() * 9 + 1) * 100000))).toString();
         // 存进redis,10分钟后过期
-        // TODO: 发邮件
+        mailSender(code, mail);
         redisUtils.set(genRedisKey(uuid), code, MAIL_CAPTCHA_EXPIRE);
         return code;
     }

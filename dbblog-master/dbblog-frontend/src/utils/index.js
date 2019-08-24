@@ -1,6 +1,16 @@
 import {LineBreakMode} from '@/common/js/const'
 
 /**
+ * 获取uuid
+ * @returns {string}
+ */
+export function getUUID () {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    return (c === 'x' ? (Math.random() * 16 | 0) : ('r&0x3' | '0x8')).toString(16)
+  })
+}
+
+/**
  * [Datestr 时间戳转字符串格式]
  */
 export function socialDateFormat (date) {

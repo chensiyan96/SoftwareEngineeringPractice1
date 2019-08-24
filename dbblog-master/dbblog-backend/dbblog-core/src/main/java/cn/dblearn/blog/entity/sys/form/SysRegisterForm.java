@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class SysRegisterForm {
     private String username;
-    private String mail;
+    private String email;
     private String password;
     private String captcha;
     private String uuid;

@@ -5,8 +5,8 @@
         <div class="top-area">
           <img src="../../../assets/background.jpg" alt="">
           <div class="site-info">
-            <h1 class="site-name">DB's Blog</h1>
-            <h1 class="site-desc">Write the code, Change the World</h1>
+            <h1 class="site-name">Blog</h1>
+            <h1 class="site-desc">We can do it</h1>
           </div>
         </div>
         <div class="sidebar-menus" >

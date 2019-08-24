@@ -64,12 +64,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public PageUtils queryPage(Map<String, Object> params) {
         String username = (String)params.get("username");
         Integer createUserId = (Integer)params.get("createUserId");
-        IPage<SysUser> page = baseMapper.selectPage(
-                new Query<SysUser>(params).getPage(),
-                new QueryWrapper<SysUser>().lambda()
-                        .like(StringUtils.isNotBlank(username),SysUser::getUsername, username)
-                        .eq(createUserId != null,SysUser::getCreateUserId, createUserId));
-        return new PageUtils(page);
+//        IPage<SysUser> page = baseMapper.selectPage(
+//                new Query<SysUser>(params).getPage(),
+//                new QueryWrapper<SysUser>().lambda()
+//                        .like(StringUtils.isNotBlank(username),SysUser::getUsername, username)
+//                        .eq(createUserId != null,SysUser::getCreateUserId, createUserId));
+//        return new PageUtils(page);
+        return null;
     }
 
     /**
@@ -82,27 +83,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean updatePassword(Integer userId, String password, String newPassword) {
-        SysUser sysUser=new SysUser();
-        sysUser.setPassword(newPassword);
-        return this.update(sysUser, new UpdateWrapper<SysUser>().lambda()
-                .eq(SysUser::getUserId,userId).eq(SysUser::getPassword,password));
+//        SysUser sysUser=new SysUser();
+//        sysUser.setPassword(newPassword);
+//        return this.update(sysUser, new UpdateWrapper<SysUser>().lambda()
+//                .eq(SysUser::getUserId,userId).eq(SysUser::getPassword,password));
+        return false;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(SysUser user) {
-        user.setCreateTime(new Date());
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(20);
         user.setPassword(new Sha256Hash(user.getPassword(), salt).toHex());
         user.setSalt(salt);
         this.baseMapper.insert(user);
-
-        //检查角色是否越权
-        checkRole(user);
-
-        //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
         return true;
     }
 
@@ -120,7 +115,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         checkRole(user);
 
         //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+//        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
         return true;
     }
 
@@ -137,7 +132,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * 检查角色是否越权
      */
     private void checkRole(SysUser user){
-        if(user.getRoleIdList() == null || user.getRoleIdList().size() == 0){
+        /*if(user.getRoleIdList() == null || user.getRoleIdList().size() == 0){
             return;
         }
         //如果不是超级管理员，则需要判断用户的角色是否自己创建
@@ -151,7 +146,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //判断是否越权
         if(!roleIdList.containsAll(user.getRoleIdList())){
             throw new MyException("新增用户所选角色，不是本人创建");
-        }
+        }*/
     }
 
 }

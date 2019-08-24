@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import router from '@/router'
 import store from '@/store'
+import Element from 'element-ui'
+import VueCookie from 'vue-cookie'
+import '@/element-ui'
+import '@/element-ui-theme'
 import 'iview/dist/styles/iview.css'
 import '@/common/stylus/index.styl'
 import App from './App.vue'
@@ -20,6 +24,9 @@ import {
   Message,
   Notice
 } from 'iview'
+
+Vue.use(Element, { size: 'small' })
+Vue.use(VueCookie)
 
 Vue.component('iv-row', Row)
 Vue.component('iv-col', Col)

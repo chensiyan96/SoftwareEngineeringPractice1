@@ -10,7 +10,7 @@
       <div id="header"  v-show="show">
     <router-link id="logo" to="/">
       <img src="../../../assets/logo.png">
-      <span class="title">DB's Blog</span>
+      <span class="title">Blog</span>
       <span class="motto">success belongs to the persevering</span>
     </router-link>
     <ul id="nav">
@@ -35,6 +35,7 @@
       <li><a href="/books" class="nav-link contribute">阅读</a></li>
       <li><a href="/timeline" class="nav-link contribute">时光轴</a></li>
       <li><a href="/article/1" class="nav-link contribute">关于</a></li>
+      <li><a href="/login" class="nav-link contribute">登录</a></li>
     </ul>
     </div>
     </transition>
