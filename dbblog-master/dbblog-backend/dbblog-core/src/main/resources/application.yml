@@ -33,6 +33,10 @@ spring:
   resources:
     #restFul风格: 不要为资源文件建立映射
     add-mappings: false
+  mail:
+    username: 3365221601@qq.com
+    password: ycjwgqcokkmodcca
+    host: smtp.qq.com
 
 #mybatis
 mybatis-plus:

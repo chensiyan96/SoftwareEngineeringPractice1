@@ -45,6 +45,9 @@ public class SysLoginController extends AbstractController {
     @Autowired
     private SysUserTokenService sysUserTokenService;
 
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response, String uuid) throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
@@ -117,6 +120,19 @@ public class SysLoginController extends AbstractController {
 
         //生成token，并保存到redis
         return sysUserTokenService.createToken(user.getUserId());
+    }
+
+    public void MailSender(String CheckCode, String MailAddr) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        //mailsetting
+
+        message.setSubject("通知by-shitblog");
+        message.setText("shitblog：您的验证码为"+CheckCode);
+
+        message.setTo(MailAddr);
+        message.setFrom("3365221601@qq.com");
+
+        mailSender.send(message);
     }
 
     /**
