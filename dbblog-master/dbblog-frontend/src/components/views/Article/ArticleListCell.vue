@@ -2,6 +2,11 @@
   <div class="article-cell">
     <a>
       <iv-row type="flex">
+          <iv-col :xs="0" :sm="0" :md="imgSpan" :lg="imgSpan" :order="imgOrderType" style="padding-left: 0px;padding-right: 0px">
+            <div class="img-wrapper" :class="themeClass">
+              <img :src="article.cover" alt="">
+            </div>
+          </iv-col>
         <iv-col :xs="24" :sm="24" :md="textSpan" :lg="textSpan" :order="textOrderType" style="padding-left: 0;padding-right: 0;">
           <div class="text-wrapper">
             <h4 class="title">
@@ -21,11 +26,7 @@
             </p>
           </div>
         </iv-col>
-        <iv-col :xs="0" :sm="0" :md="imgSpan" :lg="imgSpan" :order="imgOrderType" style="padding-left: 0px;padding-right: 0px">
-          <div class="img-wrapper" :class="themeClass">
-            <img :src="article.cover" alt="">
-          </div>
-        </iv-col>
+
       </iv-row>
     </a>
   </div>
@@ -33,7 +34,7 @@
 
 <script type="text/ecmascript-6">
 import { mixin } from '@/utils'
-const ARTICLE_TYPE_BIG_IMAGE = 1
+const ARTICLE_TYPE_BIG_IMAGE = 2
 const ARTICLE_TYPE_NO_IMAGE = 2
 
 export default {
@@ -62,11 +63,11 @@ export default {
     },
     imgSpan: function () {
       if (this.article.coverType === ARTICLE_TYPE_BIG_IMAGE) {
-        return 24
+        return 5
       } else if (this.article.coverType === ARTICLE_TYPE_NO_IMAGE) {
         return 0
       } else {
-        return 7
+        return 5
       }
     },
     themeClass: function () {
@@ -109,14 +110,14 @@ export default {
         border 1px solid $color-border-hover
         box-shadow 2px 2px 3px $color-border
       .text-wrapper
-        padding 20px 20px 0 20px
+        padding 20px 20px 0px 20px
         text-align left
         @media only screen and (max-width: 768px)
           padding 15px 15px 0 15px
         .title
-          font-size 23px
+          font-size 18px
           font-weight 100
-          line-height 27px
+          line-height 20px
           span.special
             border-radius $border-radius
             font-size 12px
@@ -179,12 +180,13 @@ export default {
                 color $color-main-primary
                 text-decoration underline
       .img-wrapper
-        padding-bottom: 85%
-        width: 100%
-        height: 0
+        max-height: 100%
+        max-width: 100%
         overflow hidden
         &.big-image
-          padding-bottom 26%
+          max-height: 100%
+          max-width: 100%
+          overflow hidden
         img
           width 100%
 </style>

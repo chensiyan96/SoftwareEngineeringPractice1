@@ -11,16 +11,20 @@ import CommonFooter from '@/components/footer/CommonFooter'
 // 首页
 import HomeContent from '@/components/content/HomeContent'
 import ArticleContent from '@/components/content/ArticleContent'
-import BookNoteContent from '@/components/content/BookNoteContent'
-import BookContent from '@/components/content/BookContent'
 import ArticleListContent from '@/components/content/ArticleListContent'
-import BookListContent from '@/components/content/BookListContent'
 import TimeLineContent from '@/components/content/TimeLineContent'
 import SearchResultContent from '@/components/content/SearchResultContent'
 import LoginContent from '@/components/content/LoginContent'
-import RegisterContent from '../components/content/RegisterContent'
+import RegisterContent from '@/components/content/RegisterContent'
+import MainIndexContent from '@/components/content/MainIndexContent'
+import WriteArticle from '../components/content/WriteArticle'
+import {clearLoginInfo} from '../utils'
 
 Vue.use(Router)
+
+const User = {
+  template: '<div>User {{ $route.params.id }}</div>'
+}
 
 let router = new Router({
   mode: 'history',
@@ -34,138 +38,122 @@ let router = new Router({
       name: 'index',
       components: {
         header: SimpleHeader,
-        content: HomeContent,
+        content: MainIndexContent,
         footer: CommonFooter
       },
       meta: {
         title: '博客 | 小学期'
       }
     },
-    {
-      path: 'login',
-      name: 'login',
-      components: {
-        header: SimpleHeader,
-        content: LoginContent,
-        footer: CommonFooter
+      {
+        path: '/user/:id',
+        name: 'user',
+        components: {
+          header: SimpleHeader,
+          content: HomeContent,
+          footer: CommonFooter
+        },
+        component: User,
+        meta: {
+          title: '个人主页 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '登录 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'register',
-      name: 'register',
-      components: {
-        header: SimpleHeader,
-        content: RegisterContent,
-        footer: CommonFooter
+      {
+        path: 'login',
+        name: 'login',
+        components: {
+          header: SimpleHeader,
+          content: LoginContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '登录 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '注册 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'article/:articleId',
-      name: 'article',
-      components: {
-        header: SimpleHeader,
-        content: ArticleContent,
-        footer: CommonFooter
-      }
-    },
-    {
-      path: 'articles',
-      name: 'articles',
-      components: {
-        header: SimpleHeader,
-        content: ArticleListContent,
-        footer: CommonFooter
+      {
+        path: 'register',
+        name: 'register',
+        components: {
+          header: SimpleHeader,
+          content: RegisterContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '注册 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '博文列表 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'articles/category/:id',
-      name: 'articles/category',
-      components: {
-        header: SimpleHeader,
-        content: ArticleListContent,
-        footer: CommonFooter
+      {
+        path: 'article/:articleId',
+        name: 'article',
+        components: {
+          header: SimpleHeader,
+          content: ArticleContent,
+          footer: CommonFooter
+        }
       },
-      meta: {
-        title: '博文列表 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'articles/search',
-      name: 'search',
-      components: {
-        header: SimpleHeader,
-        content: SearchResultContent,
-        footer: CommonFooter
+      {
+        path: 'articles',
+        name: 'articles',
+        components: {
+          header: SimpleHeader,
+          content: ArticleListContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '文章列表 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '博文搜索 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'bookNote/:bookNoteId',
-      name: 'bookNote',
-      components: {
-        header: SimpleHeader,
-        content: BookNoteContent,
-        footer: CommonFooter
-      }
-    },
-    {
-      path: 'book/:bookId',
-      name: 'book',
-      components: {
-        header: SimpleHeader,
-        content: BookContent,
-        footer: CommonFooter
-      }
-    },
-    {
-      path: 'books',
-      name: 'books',
-      components: {
-        header: SimpleHeader,
-        content: BookListContent,
-        footer: CommonFooter
+      {
+        path: 'articles/category/:id',
+        name: 'articles/category',
+        components: {
+          header: SimpleHeader,
+          content: ArticleListContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '文章列表 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '阅读 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'books/category/:id',
-      name: 'books/category',
-      components: {
-        header: SimpleHeader,
-        content: BookListContent,
-        footer: CommonFooter
+      {
+        path: 'articles/search',
+        name: 'search',
+        components: {
+          header: SimpleHeader,
+          content: SearchResultContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '文章搜索 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '阅读 | 博客 | 小学期'
-      }
-    },
-    {
-      path: 'timeline',
-      name: 'timeline',
-      components: {
-        header: SimpleHeader,
-        content: TimeLineContent,
-        footer: CommonFooter
+      {
+        path: 'articles/write',
+        name: 'writeArticle',
+        components: {
+          header: SimpleHeader,
+          content: WriteArticle,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '写文章 | 博客 | 小学期'
+        }
       },
-      meta: {
-        title: '时间轴 | 博客 | 小学期'
+      {
+        path: 'timeline',
+        name: 'timeline',
+        components: {
+          header: SimpleHeader,
+          content: TimeLineContent,
+          footer: CommonFooter
+        },
+        meta: {
+          title: '时间轴 | 博客 | 小学期'
+        }
       }
-    }
     ]
-  }]
+  }
+  ]
 })
 
 // 配置加载进度条
@@ -176,6 +164,14 @@ LoadingBar.config({
 })
 
 router.beforeEach((to, from, next) => {
+  let token = Vue.cookie.get('blog-token')
+  if (!token || !/\S/.test(token)) { // 正则：非空白就匹配
+    clearLoginInfo()
+    if (to.name === 'writeArticle') {
+      next({name: 'login'})
+      return
+    }
+  }
   LoadingBar.start()
   if (to.meta.title) {
     document.title = to.meta.title

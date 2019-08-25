@@ -213,6 +213,7 @@ create table sys_role_menu
   comment '角色与菜单对应关系'
 ;
 
+
 create table sys_user
 (
   user_id int null,

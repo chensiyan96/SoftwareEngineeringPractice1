@@ -1,7 +1,7 @@
 <template>
-  <div class="home-content">
+  <div class="main-index-content">
     <iv-row>
-      <iv-col :lg="17" :md="24" :sm="24" :xl="17" :xs="24">
+      <iv-col :lg="17" :md="17" :sm="17" :xl="17" :xs="17">
         <div class="layout-left">
           <section-title :mainTitle="'文章'" :subTitle="'Articles'" :tipHref="'/articles'" :tipText="'View More'">
             <title-menu-filter :menu-filter-list="defaultFilterList" @filterByMenu="refreshArticle"
@@ -13,11 +13,10 @@
       </iv-col>
       <iv-col :lg="7" :md="0" :sm="0" :xs="0">
         <div class="layout-right">
-          <about></about>
-          <recommend></recommend>
+          <author-recommend></author-recommend>
+          <br>
+          <br>
           <hot-read></hot-read>
-          <friend-links style="margin-top:15px;"></friend-links>
-          <tag-wall style="margin-top: 15px;"></tag-wall>
         </div>
       </iv-col>
     </iv-row>
@@ -36,6 +35,7 @@ import About from '@/components/views/About'
 import FriendLinks from '@/components/views/FriendLinks'
 import TagWall from '@/components/views/TagWall'
 import Recommend from '@/components/views/Recommend'
+import AuthorRecommend from '@/components/views/AuthorRecommend'
 import HotRead from '@/components/views/HotRead'
 import SideToc from '@/components/views/SideToc'
 import merge from 'lodash/merge' // 合并对象工具
@@ -49,8 +49,7 @@ export default {
       pageParam: {
         page: 1,
         limit: DefaultLimitSize
-      },
-      // bookNoteFilterList: JSON.parse(JSON.stringify(DefaultFilterList))
+      }
     }
   },
   components: {
@@ -66,6 +65,7 @@ export default {
     'side-toc': SideToc,
     'tag-wall': TagWall,
     'recommend': Recommend,
+    'author-recommend': AuthorRecommend,
     'hot-read': HotRead
   },
   created: function () {
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .home-content
+  .main-index-content
     width auto
     @media only screen and (max-width: 768px)
       margin 5px 5px 10px 5px

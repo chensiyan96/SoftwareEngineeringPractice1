@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import router from '@/router'
 import store from '@/store'
-import Element from 'element-ui'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import VueCookie from 'vue-cookie'
-import '@/element-ui'
-import '@/element-ui-theme'
 import 'iview/dist/styles/iview.css'
 import '@/common/stylus/index.styl'
 import App from './App.vue'
@@ -24,8 +23,9 @@ import {
   Message,
   Notice
 } from 'iview'
+import {getSysParamArr} from './utils'
 
-Vue.use(Element, { size: 'small' })
+Vue.use(ElementUI, {size: 'middle'})
 Vue.use(VueCookie)
 
 Vue.component('iv-row', Row)
@@ -41,6 +41,7 @@ Vue.prototype.$http = httpRequest // Ajax 请求方法
 Vue.prototype.$Modal = Modal
 Vue.prototype.$Message = Message
 Vue.prototype.$Notice = Notice
+Vue.prototype.getSysParamArr = getSysParamArr // 获取参数列表
 Vue.prototype.$loadScript = (script, url, callback) => {
   script = script || document.createElement('script')
   if (script.readyState) {

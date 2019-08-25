@@ -87,6 +87,7 @@ i.rotating-clockwise
 
 /* header */
 $header-height = 40px
+$logo-width = 80px
 
 body.docs
   font-family: $body-font
@@ -118,7 +119,7 @@ body.docs
   margin: 0
   padding: 0
   position: absolute
-  right: 30px
+  right: 10px
   top: $heading-padding-vertical
   height: $header-height
   line-height: $header-height
@@ -149,11 +150,12 @@ body.docs
 
 .nav-link
   padding-bottom: 3px
+  padding-right:0px
   font-size: 17px
   &:hover, &.current
     color $color-main-primary
   &.team, &.contribute
-    margin-left: 20px
+    margin-left: 3px
 
 .new-label
   position: absolute
@@ -196,8 +198,8 @@ body.docs
   img
     vertical-align: middle
     margin-right: 6px
-    width: $header-height
-    height: $header-height
+    max-width: $logo-width
+    max-height: $header-height
 
 #mobile-bar
   position: fixed
@@ -219,13 +221,13 @@ body.docs
     background: url(./../../../assets/menu.png) center center no-repeat
     background-size: 24px
   .logo
-    position: absolute
+    position: relative
     width: 30px
-    height: 30px
+    height: 15px
     background: url(./../../../assets/logo.png) center center no-repeat
     top: 5px
     left: 50%
-    margin-left: -15px
+    margin-left: -30px
     background-size: 30px
 
 /* offline menu */
@@ -273,6 +275,7 @@ body.docs
     display: none
   .nav-link
     padding-bottom: 1px
+    padding-right : 10px
     &.current
       border-bottom: 2px solid $color-main-primary
       color $color-main-primary
