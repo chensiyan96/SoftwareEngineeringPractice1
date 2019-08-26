@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserMapper">
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="queryExists" resultType="Boolean">
+		select * from `user` su
+		where exists su."用户名" = #{username} or su."邮箱" = #{email}
+	</select>
+</mapper>
