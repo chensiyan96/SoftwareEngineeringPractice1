@@ -52,8 +52,8 @@ public class SysUser implements Serializable {
     @ApiModelProperty(value = "密码")
     private String password;
 
-    @NotBlank(message = "邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Email(message = "邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式不正确")
     @ApiModelProperty(value = "邮箱")
     private String email;
 

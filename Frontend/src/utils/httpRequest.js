@@ -34,22 +34,16 @@ http.adornParams = (params = {}, openDefaultParams = false) => {
 /**
  * post请求参数处理
  * @param data
- * @param openDefaultData
+ * @param openDefaultdata
  * @param contentType
  * @returns {string}
  */
-http.adornData = (data = {}, openDefaultData = true, contentType = 'json') => {
+http.adornData = (data = {}, openDefaultdata = true, contentType = 'json') => {
   var defaults = {
     't': new Date().getTime()
   }
-  data = openDefaultData ? merge(defaults, data) : data
-  var jsonString = contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
-  var encrypt = {
-    'uuid': new Date().getTime(),
-    'data': jsonString
-  }
-  console.log(JSON.stringify(encrypt))
-  return JSON.stringify(encrypt)
+  data = openDefaultdata ? merge(defaults, data) : data
+  return contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
 }
 
 export default http

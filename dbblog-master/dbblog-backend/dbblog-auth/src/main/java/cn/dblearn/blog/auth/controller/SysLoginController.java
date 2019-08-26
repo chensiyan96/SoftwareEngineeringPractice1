@@ -72,7 +72,7 @@ public class SysLoginController extends AbstractController {
         // 用户信息
         SysUser user = sysUserMapper.selectOne(new QueryWrapper<SysUser>()
                 .lambda()
-                .eq(SysUser::getUsername, form.getUsername()));
+                .eq(SysUser::getEmail, form.getUsername()));
         if (user == null || !user.getPassword().equals(new Sha256Hash(form.getPassword(), user.getSalt()).toHex())) {
             // 用户名或密码错误
             return Result.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
