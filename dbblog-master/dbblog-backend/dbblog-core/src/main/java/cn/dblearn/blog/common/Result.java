@@ -23,6 +23,10 @@ public class Result extends HashMap<String, Object> {
         return new Result();
     }
 
+    public static Result registerCode(String code) {
+        return new Result().put("registerCode", code);
+    }
+
     public static Result error() {
         return error(ErrorEnum.UNKNOWN);
     }
@@ -32,11 +36,11 @@ public class Result extends HashMap<String, Object> {
     }
 
     public static Result error(String msg) {
-        return new Result().put("msg",msg).put("code", ErrorEnum.UNKNOWN.getCode());
+        return new Result().put("msg", msg).put("code", ErrorEnum.UNKNOWN.getCode());
     }
 
-    public static Result error(Integer code , String msg){
-        return new Result().put("code",code).put("msg",msg);
+    public static Result error(Integer code, String msg) {
+        return new Result().put("code", code).put("msg", msg);
     }
 
     public static Result exception() {
@@ -46,7 +50,6 @@ public class Result extends HashMap<String, Object> {
     public static Result exception(ErrorEnum eEnum) {
         return new Result().put("code", eEnum.getCode()).put("msg", eEnum.getMsg());
     }
-
 
 
     /**

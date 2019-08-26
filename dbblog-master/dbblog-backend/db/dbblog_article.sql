@@ -1,4 +1,4 @@
-INSERT INTO article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (1, '关于本站和博主', '关于本站和博主', 'Bobbi', '# 关于我
+INSERT INTO dbblog.article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (1, '关于本站和博主', '关于本站和博主', 'Bobbi', '# 关于我
 氧化钡，英文名Bobbi，是一名努力成长中的Java爱好者  
 以下是微信，欢迎互相交流
 ![名片.jpg](http://oss.dblearn.cn/dbblog/20190303/63ba034bf1e24e918aa53cccb3fb66dc.jpg)
@@ -14,7 +14,7 @@ INSERT INTO article (id, title, description, author, content, content_format, re
 项目还会持续更新，欢迎大家star,谢谢！
 <a href="https://github.com/llldddbbb/dbblog">&gt;&gt;点击进入</a></p>
 ', 51, 0, 1, 1, 'http://oss.dblearn.cn/dbblog/20190303/18a6c1d2ed47494396462901ffe02f30.jpg', '2019-03-09 17:09:38', '2019-03-04 17:41:50', 1, '1,2,3', 1, 1);
-INSERT INTO article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (3, '2019Java最新面试题——Java基础（持续更新）', '网上找的面试题大多比较老旧，很多还是Java6以前的。现在都更新到Java11了，面试题也应该与时俱进。本文搜罗各大厂的Java面试题，力求题目从简到难，分类明确，答案详细！也借此来巩固自己的知识。', 'Bobbi', '### Java基础
+INSERT INTO dbblog.article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (3, '2019Java最新面试题——Java基础（持续更新）', '网上找的面试题大多比较老旧，很多还是Java6以前的。现在都更新到Java11了，面试题也应该与时俱进。本文搜罗各大厂的Java面试题，力求题目从简到难，分类明确，答案详细！也借此来巩固自己的知识。', 'Bobbi', '### Java基础
 #### 1. 两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？两个对象用equals方法比较为true，它们的hashcode值相同吗？
 不对，两个对象的hashCode相同，equals()不一定true，equals()方法为true，他们的hashcode也不一定相同。
 代码实例:
@@ -62,7 +62,7 @@ hashCode 的常规协定是：
 <p>&emsp;&emsp;如果根据 equals(Object) 方法，两个对象是相等的，那么对这两个对象中的每个对象调用 hashCode 方法都必须生成相同的整数结果。如果根据 equals(java.lang.Object) 方法，两个对象不相等，那么对这两个对象中的任一对象上调用 hashCode 方法不要求一定生成不同的整数结果。但是，程序员应该意识到，为不相等的对象生成不同整数结果可以提高哈希表的性能。</p>
 <p><strong>总的来说：重写equals方法时请必须重写hashcode，以保证equals方法相等时两个对象hashcode返回相同的值。如果你不按照规范来，就不一定相同了。</strong></p>
 ', 32, 0, 0, 0, 'http://oss.dblearn.cn/dbblog/20190304/b00399e2664b4c42a3e2b4b23fcf128b.jpeg', '2019-03-09 17:09:38', '2019-03-04 23:24:09', 1, '9,11,12', 1, 0);
-INSERT INTO article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (4, '用最简单的话告诉你什么是ElasticSearch', 'Elasticsearch 是一个分布式可扩展的实时搜索和分析引擎,一个建立在全文搜索引擎 Apache Lucene(TM) 基础上的搜索引擎.当然 Elasticsearch 并不仅仅是 Lucene 那么简单，下面就介绍ElasticSearch为什么是分布式的，可扩展，高性能，高可用。
+INSERT INTO dbblog.article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (4, '用最简单的话告诉你什么是ElasticSearch', 'Elasticsearch 是一个分布式可扩展的实时搜索和分析引擎,一个建立在全文搜索引擎 Apache Lucene(TM) 基础上的搜索引擎.当然 Elasticsearch 并不仅仅是 Lucene 那么简单，下面就介绍ElasticSearch为什么是分布式的，可扩展，高性能，高可用。
 
 
 作者：fallinjava
@@ -143,7 +143,7 @@ INSERT INTO article (id, title, description, author, content, content_format, re
 <li>动态扩容，当我们数据量急剧提升的时候，我们只需要增加机器就行了，比如两台机器存放1.2T数据，那么没台机器存放就是600G，但是如果600G对于服务器的压力太大了，这个时候就需要增加第三台机器，让他们每人负责400G的数据，这个过程不需要人为的去分配，只需要将汲取加入集群中就自动完成。</li>
 </ol>
 ', 12, 0, 0, 0, 'http://oss.dblearn.cn/dbblog/20190305/d991537084cf42b2889b41838b59df0f.png', '2019-03-09 17:09:38', '2019-03-05 12:59:56', 0, '9,11,12', 1, 0);
-INSERT INTO article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (5, '性能分析利器《Arthas》总结', 'Arthas 是Alibaba开源的Java诊断工具，为什么要介绍这个工具呢？先来看看你是否都遇到这样的场景：当你线上项目出了问题，但是一打开日志发现，有些地方忘记打了日志，于是你马上补上日志，然后重新上线。当你的项目某个接口执行速度较慢，为了排查问题，于是你四处加上每个方法运行时间。当你发现某个类有冲突，好像在线上运行的结果和你预期的不符合，手动把线上编译出的class文件下载下来然后反编译，看看究竟class内容是什么。', 'Bobbi', '## 性能分析利器《Arthas》总结
+INSERT INTO dbblog.article (id, title, description, author, content, content_format, read_num, comment_num, like_num, cover_type, cover, create_time, update_time, recommend, category_id, publish, top) VALUES (5, '性能分析利器《Arthas》总结', 'Arthas 是Alibaba开源的Java诊断工具，为什么要介绍这个工具呢？先来看看你是否都遇到这样的场景：当你线上项目出了问题，但是一打开日志发现，有些地方忘记打了日志，于是你马上补上日志，然后重新上线。当你的项目某个接口执行速度较慢，为了排查问题，于是你四处加上每个方法运行时间。当你发现某个类有冲突，好像在线上运行的结果和你预期的不符合，手动把线上编译出的class文件下载下来然后反编译，看看究竟class内容是什么。', 'Bobbi', '## 性能分析利器《Arthas》总结
 Arthas 是Alibaba开源的Java诊断工具，为什么要介绍这个工具呢？先来看看你是否都遇到这样的场景：
 
 - 当你线上项目出了问题，但是一打开日志发现，有些地方忘记打了日志，于是你马上补上日志，然后重新上线。

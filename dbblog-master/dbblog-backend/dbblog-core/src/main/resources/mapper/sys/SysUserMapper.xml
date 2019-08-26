@@ -15,4 +15,10 @@
 			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
 		where ur.user_id = #{userId}
 	</select>
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="queryExists" resultType="Boolean">
+		select * from sys_user su
+		where exists su."用户名" = #{username} or su."邮箱" = #{email}
+	</select>
 </mapper>
