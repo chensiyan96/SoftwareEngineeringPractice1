@@ -8,6 +8,7 @@
           <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
         </el-form-item>
 
+
         <el-form-item prop="captcha">
           <el-input v-model="dataForm.captcha" placeholder="邮箱中收到的验证码" class="email-captcha"></el-input>
           <el-button class="register-btn-get-captcha" type="primary" @click="getCaptcha()" :disabled=disabled>
@@ -36,151 +37,155 @@
 </template>
 
 <script>
-  import {isEmail} from '../utils/validate'
-  import {getUUID} from '../../utils'
+    import {isEmail} from '../utils/validate'
+    import {getUUID} from '../../utils'
 
-  export default {
-    created () {
-      this.register()
-    },
-    data () {
-      const validateCaptcha = (rule, value, callback) => {
-        if (!this.dataForm.captcha && !/\S/.test(value)) {
-          callback(new Error('验证码不能为空'))
-        } else {
-          callback()
-        }
-      }
-      const validatePassword = (rule, value, callback) => {
-        if (!this.dataForm.id && !/\S/.test(value)) {
-          callback(new Error('密码不能为空'))
-        } else {
-          callback()
-        }
-      }
-      const validateConfirmPassword = (rule, value, callback) => {
-        if (!this.dataForm.id && !/\S/.test(value)) {
-          callback(new Error('确认密码不能为空'))
-        } else if (this.dataForm.password !== value) {
-          callback(new Error('确认密码与密码输入不一致'))
-        } else {
-          callback()
-        }
-      }
-      const validateEmail = (rule, value, callback) => {
-        if (!isEmail(value)) {
-          callback(new Error('邮箱格式错误'))
-        } else {
-          callback()
-        }
-      }
-      return {
-        btn_text: '获取验证码',
-        disabled: false,
-        dataForm: {
-          id: 0,
-          captcha: '',
-          userName: '',
-          password: '',
-          confirmPassword: '',
-          // salt: '',
-          email: ''
+    export default {
+        created() {
+            // this.register()
         },
-        dataRule: {
-          captcha: [
-            {required: true, message: '验证码不能为空', trigger: 'blur'}
-          ],
-          userName: [
-            {required: true, message: '用户名不能为空', trigger: 'blur'}
-          ],
-          password: [
-            {validator: validatePassword, trigger: 'blur'}
-          ],
-          confirmPassword: [
-            {validator: validateConfirmPassword, trigger: 'blur'}
-          ],
-          email: [
-            {required: true, message: '邮箱不能为空', trigger: 'blur'},
-            {validator: validateEmail, trigger: 'blur'}
-          ]
+        data() {
+            const validateCaptcha = (rule, value, callback) => {
+                if (!this.dataForm.captcha && !/\S/.test(value)) {
+                    callback(new Error('验证码不能为空'))
+                } else {
+                    callback()
+                }
+            }
+            const validatePassword = (rule, value, callback) => {
+                if (!this.dataForm.id && !/\S/.test(value)) {
+                    callback(new Error('密码不能为空'))
+                } else {
+                    callback()
+                }
+            }
+            const validateConfirmPassword = (rule, value, callback) => {
+                if (!this.dataForm.id && !/\S/.test(value)) {
+                    callback(new Error('确认密码不能为空'))
+                } else if (this.dataForm.password !== value) {
+                    callback(new Error('确认密码与密码输入不一致'))
+                } else {
+                    callback()
+                }
+            }
+            const validateEmail = (rule, value, callback) => {
+                if (!isEmail(value)) {
+                    callback(new Error('邮箱格式错误'))
+                } else {
+                    callback()
+                }
+            }
+            return {
+                btn_text: '获取验证码',
+                disabled: false,
+                dataForm: {
+                    id: 0,
+                    captcha: '',
+                    userName: '',
+                    password: '',
+                    confirmPassword: '',
+                    // salt: '',
+                    email: ''
+                },
+                dataRule: {
+                    captcha: [
+                        {required: true, message: '验证码不能为空', trigger: 'blur'}
+                    ],
+                    userName: [
+                        {required: true, message: '用户名不能为空', trigger: 'blur'}
+                    ],
+                    password: [
+                        {validator: validatePassword, trigger: 'blur'}
+                    ],
+                    confirmPassword: [
+                        {validator: validateConfirmPassword, trigger: 'blur'}
+                    ],
+                    email: [
+                        {required: true, message: '邮箱不能为空', trigger: 'blur'},
+                        {validator: validateEmail, trigger: 'blur'}
+                    ]
+                },
+                emailRule: [
+                    {required: true, message: '邮箱不能为空', trigger: 'blur'},
+                    {validator: validateEmail, trigger: 'blur'}
+                ]
+            }
         },
-        emailRule: [
-          {required: true, message: '邮箱不能为空', trigger: 'blur'},
-          {validator: validateEmail, trigger: 'blur'}
-        ]
-      }
-    },
-    methods: {
-      register () {
-        this.$http({
-          url: this.$http.adornUrl('/register'),
-          method: 'get',
-          params: this.$http.adornParams()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            console.log(data)
-          }
-        })
-      },
-      getCaptcha () {//获取验证码
-        if (isEmail(this.dataForm.email)) {
-          this.dataForm.uuid = getUUID()
-          this.$http({
-            url: this.$http.adornUrl('/register-captcha'), // 请求的地址
-            method: 'post', // 请求的方式
-            data: this.$http.adornData({// 请求的数据
-              'email': this.dataForm.email,
-              'uuid': this.dataForm.password
-            })
-          }).then(res => {
-            this.time = 60
-            this.disabled = true
-            this.email_timer()
-          }).catch(err => {
-            console.info('报错的信息', err.response.message)
-          })
-        } else {
-          alert('请输入正确的邮箱')
+        methods: {
+            register() {
+                this.$http({
+                    url: this.$http.adornUrl('/register'),
+                    method: 'get',
+                    params: this.$http.adornParams()
+                }).then(({data}) => {
+                    if (data && data.code === 200) {
+                        console.log(data)
+                    }
+                })
+            },
+            getCaptcha() {//获取验证码
+                if (isEmail(this.dataForm.email)) {
+                    this.time = 60
+                    this.disabled = true
+                    this.email_timer()
+                    this.$http({
+                        url: this.$http.adornUrl('/sendEmailCaptcha'), // 请求的地址
+                        method: 'post', // 请求的方式
+                        data: this.$http.adornData({// 请求的数据
+                            'email': this.dataForm.email
+                        })
+                    }).then(res => {
+                    }).catch(err => {
+                        console.info('报错的信息', err.response.message)
+                    })
+                } else {
+                    alert('请输入正确的邮箱')
+                }
+            },
+            email_timer() {//邮件发送时间间隔
+                if (this.time > 0) {
+                    --this.time
+                    this.btn_text = this.time + '秒后重新获取验证码'
+                    setTimeout(this.email_timer, 1000)
+                } else {
+                    this.time = 0
+                    this.btn_text = '获取验证码'
+                    this.disabled = false
+                }
+            },
+            dataFormSubmit() {//提交信息
+                this.$refs['dataForm'].validate((valid) => {
+                    if (valid) {
+                        // this.$http 服务可用于发送 HTTP 请求
+                        this.$http({
+                            url: this.$http.adornUrl('/register'), // 请求的地址
+                            method: 'post', // 请求的方式
+                            data: this.$http.encryptData({// 请求的数据
+                                'captcha': this.dataForm.captcha,
+                                'username': this.dataForm.userName,
+                                'password': this.dataForm.password,
+                                // 'salt': this.dataForm.salt,
+                                'email': this.dataForm.email
+                            })
+                        }).then(({data}) => {
+                            console.log(data)
+                            if (data && data.success) {
+                                this.$message.success('注册成功');
+                                localStorage.setItem('blog_username', this.dataForm.userName);
+                                this.$cookie.set('blog-token', data.token);
+                                this.$router.replace({name: 'index'})
+                            } else {
+                                this.getCaptcha();
+                                this.$Message.error(data.msg)
+                            }
+                        })
+                    } else {
+                        this.$Message.error(this.msg)
+                    }
+                })
+            }
         }
-      },
-      email_timer () {//邮件发送时间间隔
-        if (this.time > 0) {
-          --this.time
-          this.btn_text = this.time + '秒后重新获取验证码'
-          setTimeout(this.email_timer, 1000)
-        } else {
-          this.time = 0
-          this.btn_text = '获取验证码'
-          this.disabled = false
-        }
-      },
-      dataFormSubmit () {//提交信息
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            // this.$http 服务可用于发送 HTTP 请求
-            this.$http({
-              url: this.$http.adornUrl('/register'), // 请求的地址
-              method: 'post', // 请求的方式
-              data: this.$http.adornData({// 请求的数据
-                'captcha': this.dataForm.captcha,
-                'userId': this.dataForm.id || undefined,
-                'username': this.dataForm.userName,
-                'password': this.dataForm.password,
-                // 'salt': this.dataForm.salt,
-                'email': this.dataForm.email
-              })
-            }).then(res => {
-              console.info('后台返回的数据', res.data)
-            }).catch(err => {
-              console.info('报错的信息', err.response.message)
-            })
-          } else {
-            this.$Message.error(this.msg)
-          }
-        })
-      }
     }
-  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

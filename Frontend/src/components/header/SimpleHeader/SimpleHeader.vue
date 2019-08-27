@@ -10,8 +10,8 @@
       <div id="header" v-show="show">
         <router-link id="logo" to="/">
           <img src="../../../assets/logo.png">
-          <span class="title">Blog</span>
-          <span class="motto">success belongs to the persevering</span>
+<!--          <span class="title">Blog</span>-->
+          <span class="motto">喝一杯咖啡，敲一段代码</span>
         </router-link>
         <ul id="nav">
           <li>
@@ -32,10 +32,10 @@
             </form>
           </li>
 
-<!--          <li><a href="/usr" class="nav-link contribute">个人主页（测试）</a></li>-->
-<!--          <li><a href="/articles" class="nav-link contribute">文章</a></li>-->
+<!-- <li><a href="/usr" class="nav-link contribute">个人主页（测试）</a></li>-->
+<!-- <li><a href="/articles" class="nav-link contribute">文章</a></li>-->
           <li><a href="/timeline" class="nav-link contribute">时光轴</a></li>
-<!--          <li><a href="/article/1" class="nav-link contribute">关于</a></li>-->
+<!--li><a href="/article/1" class="nav-link contribute">关于</a></li>-->
           <li><a href="/articles/write" class="nav-link contribute">写文章</a></li>
           <li><router-link :to=homeLink class="nav-link contribute">{{name}}</router-link></li>
         </ul>

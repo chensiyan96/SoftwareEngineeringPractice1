@@ -86,16 +86,17 @@
                     if (valid) {
                         // this.$http 服务可用于发送 HTTP 请求
                         this.$http({
-                            url: this.$http.adornUrl('/admin/sys/login'), // 请求的地址
+                            url: this.$http.adornUrl('/login'), // 请求的地址
                             method: 'post', // 请求的方式
-                            data: this.$http.adornData({// 请求的数据
-                                'username': this.dataForm.userName,
+                            data: this.$http.encryptData({// 请求的数据
+                                'email': this.dataForm.userName,
                                 'password': this.dataForm.password,
                                 'uuid': this.dataForm.uuid,
                                 'captcha': this.dataForm.captcha
                             })
                         }).then(({data}) => {
-                            if (data && data.code === 200) {
+                            console.log(data)
+                            if (data && data.success) {
                                 this.$message.success('登录成功');
                                 localStorage.setItem('blog_username', this.dataForm.userName);
                                 this.$cookie.set('blog-token', data.token);

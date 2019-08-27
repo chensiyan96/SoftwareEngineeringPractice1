@@ -3,7 +3,7 @@
     <iv-row>
       <iv-col :lg="17" :md="17" :sm="17" :xl="17" :xs="17">
         <div class="layout-left">
-          <section-title :mainTitle="'文章'" :subTitle="'Articles'" :tipHref="'/articles'" :tipText="'View More'">
+          <section-title :mainTitle="'文章'" :tipHref="'/articles'" :tipText="'查看更多'">
             <title-menu-filter :menu-filter-list="defaultFilterList" @filterByMenu="refreshArticle"
                                slot="menu"></title-menu-filter>
           </section-title>
