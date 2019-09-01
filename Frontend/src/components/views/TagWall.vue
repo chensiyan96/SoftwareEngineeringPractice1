@@ -2,7 +2,8 @@
   <div class="tag-wall">
     <panel :title="'标签墙'">
       <div slot="content" class="content">
-        <iv-tag v-for="(tag , index) in tagList" type="dot" color="blue" :key="index" style="margin: 0 5px 5px 0;" class="dot-tag">{{ tag.name +' ['+ tag.linkNum + ']'}}
+        <iv-tag v-for="(tag , index) in tagList" type="dot" color="blue" :key="index" style="margin: 0 5px 5px 0;"
+                class="dot-tag">{{ tag.name +' ['+ tag.linkNum + ']'}}
         </iv-tag>
       </div>
     </panel>
@@ -10,34 +11,35 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Panel from '@/components/utils/Panel'
+    import Panel from '@/components/utils/Panel'
 
-export default {
-  data () {
-    return {
-      tagList: []
-    }
-  },
-  components: {
-    'panel': Panel
-  },
-  created () {
-    this.listTag()
-  },
-  methods: {
-    listTag () {
-      this.$http({
-        url: this.$http.adornUrl('/operation/tags'),
-        method: 'get',
-        params: this.$http.adornParams()
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.tagList = data.tagList
+    export default {
+        data() {
+            return {
+                userId: this.$route.params.id,
+                tagList: []
+            }
+        },
+        components: {
+            'panel': Panel
+        },
+        created() {
+            this.listTag()
+        },
+        methods: {
+            listTag() {
+                this.$http({
+                    url: this.$http.adornUrl('/tags/' + this.userId),
+                    method: 'get',
+                    params: this.$http.adornParams()
+                }).then(({data}) => {
+                    if (data && data.code === 200) {
+                        this.tagList = data.tagList
+                    }
+                })
+            }
         }
-      })
     }
-  }
-}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

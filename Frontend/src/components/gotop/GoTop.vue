@@ -1,7 +1,7 @@
 <template>
   <!--<transition name="el-zoom-in-center">-->
   <transition name="el-fade-in">
-    <div @click="toTop" v-show="topShow" class="me-to-top"><el-icon class="el-icon-caret-top" ></el-icon></div>
+    <div @click="toTop" v-show="topShow" class="me-to-top"><el-icon class="el-icon-caret-top" style="color: darkgray" ></el-icon></div>
   </transition>
 </template>
 

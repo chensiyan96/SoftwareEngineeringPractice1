@@ -8,6 +8,8 @@ import 'iview/dist/styles/iview.css'
 import '@/common/stylus/index.styl'
 import App from './App.vue'
 import httpRequest from '@/utils/httpRequest'
+import JSEncrypt from 'jsencrypt'
+import './assets/thirdIcon/iconfont.css'
 
 // iView UI 组件引入
 import {
@@ -27,6 +29,7 @@ import {getSysParamArr} from './utils'
 
 Vue.use(ElementUI, {size: 'middle'})
 Vue.use(VueCookie)
+Vue.use(JSEncrypt.default_key_size = 1024)
 
 Vue.component('iv-row', Row)
 Vue.component('iv-col', Col)

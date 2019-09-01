@@ -2,25 +2,20 @@
   <div class="register-content">
     <blank-content></blank-content>
     <div class="register-main">
-      <h1 class="register-title">请注册</h1><br><br>
+      <h1 class="register-title">重置密码</h1><br><br>
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
         <!--prop属性绑定-->
         <el-form-item prop="email">
-          <el-input v-model="dataForm.email" placeholder="邮箱" autocomplete="on"></el-input>
+          <el-input v-model="dataForm.email" placeholder="邮箱" autocomplete="on" ></el-input>
         </el-form-item>
 
         <el-form-item prop="captcha">
           <el-col :span="12" :offset="0" class="email-captcha">
             <el-input :plain="true" v-model="dataForm.captcha" placeholder="收到的验证码"></el-input>
           </el-col>
-          <el-button :plain="true" class="register-btn-get-captcha" type="primary" @click="getCaptcha()"
-                     :disabled=disabled>
+          <el-button :plain="true" class="register-btn-get-captcha" type="primary" @click="getCaptcha()" :disabled=disabled>
             {{btn_text}}
           </el-button>
-        </el-form-item>
-
-        <el-form-item prop="userName">
-          <el-input v-model="dataForm.userName" placeholder="用户名"></el-input>
         </el-form-item>
 
         <el-form-item prop="password" :class="{ 'is-required': !dataForm.id }">
@@ -28,12 +23,11 @@
         </el-form-item>
 
         <el-form-item prop="password_check" :class="{ 'is-required': !dataForm.id }">
-          <el-input v-model="dataForm.password_check" type="password" placeholder="请确认您的密码"
-                    autocomplete="off"></el-input>
+          <el-input v-model="dataForm.password_check" type="password" placeholder="请确认您的密码" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item>
-          <el-button class="register-btn-submit" type="primary" @click="dataFormSubmit()">注册</el-button>
+          <el-button class="register-btn-submit" type="primary" @click="dataFormSubmit()">确认</el-button>
         </el-form-item>
 
         <el-form-item>
@@ -59,23 +53,16 @@
     import {getUUID} from '../../utils'
 
     export default {
-        created() {
+        created () {
             this.register()
         },
         components: {
             'blank-content': BlankContent
         },
-        data() {
+        data () {
             const validateCaptcha = (rule, value, callback) => {
                 if (!this.dataForm.captcha && !/\S/.test(value)) {
                     callback(new Error('验证码不能为空'))
-                } else {
-                    callback()
-                }
-            }
-            const validateUsername = (rule, value, callback) => {
-                if (!isUsername(value)) {
-                    callback(new Error('用户名需要4-20个字符，只能包含英文中文下划线'))
                 } else {
                     callback()
                 }
@@ -111,20 +98,14 @@
                 dataForm: {
                     id: 0,
                     captcha: '',
-                    userName: '',
                     password: '',
                     password_check: '',
-                    // salt: '',
                     email: ''
                 },
                 dataRule: {
                     captcha: [
                         {required: true, message: '验证码不能为空', trigger: 'blur'},
                         {validator: validateCaptcha, trigger: 'blur'}
-                    ],
-                    userName: [
-                        {required: true, message: '用户名不能为空', trigger: 'blur'},
-                        {validator: validateUsername, trigger: 'blur'}
                     ],
                     password: [
                         {required: true, message: '密码不能为空', trigger: 'blur'},
@@ -146,7 +127,7 @@
             }
         },
         methods: {
-            register() {
+            register () {
                 this.$http({
                     url: this.$http.adornUrl('/getPublicKey'),
                     method: 'get',
@@ -158,15 +139,11 @@
                     }
                 })
             },
-            getCaptcha() { // 获取验证码
-                if (this.disabled) {
-                    return
-                }
+            getCaptcha () { // 获取验证码
                 if (isEmail(this.dataForm.email)) {
                     this.time = 60
                     this.disabled = true
                     this.email_timer()
-
                     this.$http({
                         url: this.$http.adornUrl('/sendEmailCaptcha'), // 请求的地址
                         method: 'post', // 请求的方式
@@ -181,7 +158,7 @@
                     this.$message.error('请输入正确的邮箱')
                 }
             },
-            email_timer() { // 邮件发送时间间隔
+            email_timer () { // 邮件发送时间间隔
                 if (this.time > 0) {
                     --this.time
                     this.btn_text = this.time + '秒后重新获取'
@@ -192,31 +169,27 @@
                     this.disabled = false
                 }
             },
-            dataFormSubmit() { // 提交信息
+            dataFormSubmit () { // 提交信息
                 this.$refs['dataForm'].validate((valid) => {
                     if (valid) {
                         // this.$http 服务可用于发送 HTTP 请求
                         this.$http({
-                            url: this.$http.adornUrl('/register'), // 请求的地址
+                            url: this.$http.adornUrl('/resetPassword'), // 请求的地址
                             method: 'post', // 请求的方式
                             data: this.$http.encryptData({// 请求的数据
                                 'email': this.dataForm.email,
-                                'username': this.dataForm.userName,
                                 'password': this.dataForm.password,
                                 'captcha': this.dataForm.captcha
                             }, this.key, this.uuid)
                         }).then(({data}) => {
                             if (data && data.success) {
-                                this.$message.success('注册成功')
-                                localStorage.setItem('blog_userId', data.data.userId)
+                                this.$message.success('重置密码成功')
                                 localStorage.setItem('blog_username', data.data.username)
-                                localStorage.setItem('blog_email', data.data.username)
-                                localStorage.setItem('blog_avatar', data.data.avatar)
-                                localStorage.setItem('blog_introduce', data.data.info)
                                 this.$cookie.set('blog-token', data.data.token)
                                 this.$router.replace({name: 'index'})
                                 this.reload()
                             } else {
+                                this.getCaptcha()
                                 this.$Message.error(data.msg)
                             }
                         })

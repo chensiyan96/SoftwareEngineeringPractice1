@@ -1,11 +1,12 @@
 <template>
   <div class="section-title">
     <div class="title">
-      <span class="square"></span>
-      <span class="main-title">{{mainTitle}}</span>
-      <span class="vertical-line"></span>
-      <span class="sub-title">{{subTitle}}</span>
-      <span class="view-more"><a :href="tipHref" v-if="tipText">{{tipText}} <iv-icon type="arrow-right-b"></iv-icon></a></span>
+<!--      <span class="square"></span>-->
+<!--      <span class="main-title">{{mainTitle}}</span>-->
+<!--      <span class="vertical-line"></span>-->
+<!--      <span class="sub-title">{{subTitle}}</span>-->
+
+<!--      <span class="view-more"><a :href="tipHref" v-if="tipText">{{tipText}} <iv-icon type="arrow-right-b"></iv-icon></a></span>-->
     </div>
     <div class="menu">
       <slot name="menu"></slot>
@@ -28,10 +29,11 @@ export default {
   @import "../../../common/stylus/index.styl"
 
   .section-title
+    /*border black solid 1px*/
     display flex
     justify-content space-between
     padding 20px 0
-    height 90px
+    height auto
     line-height 50px
     text-align left
     box-sizing border-box
@@ -43,7 +45,7 @@ export default {
         display inline-block
         height 30px
         width 30px
-        background #000000
+        background #409EFF
         vertical-align middle
       .main-title
         display inline-block

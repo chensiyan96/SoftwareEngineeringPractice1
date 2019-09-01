@@ -9,13 +9,17 @@
                                :defaultCategory="selected_category"
                                :mainTitle="'文章列表'" :sub-title="'Articles'" ></article-list-header>
           <article-list-cell v-for="article in articleList" :article="article" :key="article.articleId"></article-list-cell>
-          <browse-more v-if="showData" @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></browse-more>
+          <browse-more v-if="showData" @browseMore="browseMore" :noMoreData="noMoreData"  ref="browseMore"></browse-more>
         </div>
       </iv-col>
       <iv-col :xs="0" :sm="0" :md="0" :lg="7">
         <div class="layout-right">
+          <author-recommend></author-recommend>
+          <br>
+<!--          <recommend></recommend>-->
+          <br>
           <hot-read></hot-read>
-          <tag-wall style="margin-top: 15px;"></tag-wall>
+<!--          <tag-wall style="margin-top: 15px;"></tag-wall>-->
         </div>
       </iv-col>
     </iv-row>
@@ -27,12 +31,14 @@ import ArticleListHeader from '@/components/views/Article/ArticleListHeader'
 import ArticlePageContent from '@/components/views/Article/ArticlePageContent'
 import ArticlePageFooter from '@/components/views/Article/ArticlePageFooter'
 import ArticleListCell from '@/components/views/Article/ArticleListCell'
-import HotRead from '@/components/views/HotRead'
+import Recommend from '@/components/views/Recommend'
 import TagWall from '@/components/views/TagWall'
 import BrowseMore from '@/components/views/BrowseMore'
 import merge from 'lodash/merge'
 import {treeDataTranslate} from '@/utils'
 import {DefaultLimitSize} from '@/common/js/const'
+import AuthorRecommend from '@/components/views/AuthorRecommend'
+import HotRead from '@/components/views/HotRead'
 
 export default {
   data () {
@@ -142,8 +148,10 @@ export default {
     'article-page-content': ArticlePageContent,
     'article-page-footer': ArticlePageFooter,
     'article-list-cell': ArticleListCell,
-    'hot-read': HotRead,
+    'recommend': Recommend,
     'tag-wall': TagWall,
+    'author-recommend': AuthorRecommend,
+    'hot-read': HotRead,
     'browse-more': BrowseMore
   }
 }

@@ -1,23 +1,24 @@
 <template>
-  <div class="home-content">
+  <div class="article-list-content">
     <iv-row>
-      <iv-col :lg="17" :md="24" :sm="24" :xl="17" :xs="24">
+      <iv-col :xs="24" :sm="24" :md="24" :lg="17">
         <div class="layout-left">
-          <section-title :mainTitle="'文章'" :subTitle="'Articles'" :tipHref="'/articles'" :tipText="'View More'">
-            <title-menu-filter :menu-filter-list="defaultFilterList" @filterByMenu="refreshArticle"
-                               slot="menu"></title-menu-filter>
-          </section-title>
-          <article-list-cell :article="article" :key="article.title" :type="'article'"
-                             v-for="article in articleList"></article-list-cell>
+          <article-list-header v-if="categoryList.length>0" @filterByMenu="filterByMenu"
+                               @filterByCategory="filterByCategory"
+                               :categorys="categoryList"
+                               :defaultCategory="selected_category"
+                               :mainTitle="'文章列表'" :sub-title="'Articles'"></article-list-header>
+          <article-list-cell v-for="article in articleList" :article="article"
+                             :key="article.articleId"></article-list-cell>
+          <browse-more v-if="showData" @browseMore="browseMore" :noMoreData="noMoreData" ref="browseMore"></browse-more>
         </div>
       </iv-col>
-      <iv-col :lg="7" :md="0" :sm="0" :xs="0">
+      <iv-col :xs="0" :sm="0" :md="0" :lg="7">
         <div class="layout-right">
           <about></about>
-          <recommend></recommend>
           <hot-read></hot-read>
-          <friend-links style="margin-top:15px;"></friend-links>
           <tag-wall style="margin-top: 15px;"></tag-wall>
+
         </div>
       </iv-col>
     </iv-row>
@@ -25,73 +26,127 @@
 </template>
 
 <script type="text/ecmascript-6">
-import ArticleListCell from '@/components/views/Article/ArticleListCell'
-import SectionTitle from '@/components/views/SectionTitle/SectionTitle'
-import TitleMenuFilter from '@/components/views/SectionTitle/TitleMenuFilter'
-import ArticlePageHeader from '@/components/views/Article/ArticlePageHeader'
-import ArticlePageContent from '@/components/views/Article/ArticlePageContent'
-import ArchiveListTimeTitle from '@/components/views/Archive/ArchiveListTimeTitle'
-import ArchiveListCell from '@/components/views/Archive/ArchiveListCell'
-import About from '@/components/views/About'
-import FriendLinks from '@/components/views/FriendLinks'
-import TagWall from '@/components/views/TagWall'
-import Recommend from '@/components/views/Recommend'
-import HotRead from '@/components/views/HotRead'
-import SideToc from '@/components/views/SideToc'
-import merge from 'lodash/merge' // 合并对象工具
-import {DefaultFilterList, DefaultLimitSize} from '@/common/js/const'
+    import ArticleListHeader from '@/components/views/Article/ArticleListHeader'
+    import ArticlePageContent from '@/components/views/Article/ArticlePageContent'
+    import ArticlePageFooter from '@/components/views/Article/ArticlePageFooter'
+    import ArticleListCell from '@/components/views/Article/ArticleListCell'
+    import Recommend from '@/components/views/Recommend'
+    import TagWall from '@/components/views/TagWall'
+    import BrowseMore from '@/components/views/BrowseMore'
+    import About from '@/components/views/About'
+    import HotRead from '@/components/views/HotRead'
+    import merge from 'lodash/merge'
+    import {treeDataTranslate} from '@/utils'
+    import {DefaultLimitSize} from '@/common/js/const'
 
-export default {
-  data () {
-    return {
-      articleList: [],
-      defaultFilterList: DefaultFilterList,
-      pageParam: {
-        page: 1,
-        limit: DefaultLimitSize
-      },
-      // bookNoteFilterList: JSON.parse(JSON.stringify(DefaultFilterList))
-    }
-  },
-  components: {
-    'article-list-cell': ArticleListCell,
-    'section-title': SectionTitle,
-    'title-menu-filter': TitleMenuFilter,
-    'article-page-header': ArticlePageHeader,
-    'article-page-content': ArticlePageContent,
-    'archive-list-time-title': ArchiveListTimeTitle,
-    'archive-list-cell': ArchiveListCell,
-    'about': About,
-    'friend-links': FriendLinks,
-    'side-toc': SideToc,
-    'tag-wall': TagWall,
-    'recommend': Recommend,
-    'hot-read': HotRead
-  },
-  created: function () {
-    let param = {}
-    param.latest = true
-    this.refreshArticle(param)
-  },
-  methods: {
-    refreshArticle (param) {
-      let params = merge(param, this.pageParam)
-      this.$http({
-        url: this.$http.adornUrl('/articles'),
-        params: this.$http.adornParams(params, false),
-        method: 'get'
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.articleList = data.page.list
+    export default {
+        data() {
+            return {
+                articleList: [],
+                categoryList: [],
+                selected_category: this.$route.params.id,
+                currentPage: 1,
+                pageSize: DefaultLimitSize,
+                categoryId: this.$route.params.id,
+                menuParams: {
+                    latest: true
+                },
+                noMoreData: false,
+                showData: false
+            }
+        },
+        created() {
+            this.userId = this.$route.params.id
+            this.listArticle()
+            this.listCategory()
+        },
+        methods: {
+            listArticle() {
+                let params = {
+                    categoryId: this.categoryId,
+                    limit: this.pageSize,
+                    page: this.currentPage
+                }
+                params = merge(params, this.menuParams)
+                this.$http({
+                    url: this.$http.adornUrl('/articles/' + this.userId),
+                    params: this.$http.adornParams(params),
+                    method: 'get'
+                }).then(({data}) => {
+                    if (data && data.code === 200) {
+                        this.showData = data.page.currPage < data.page.totalPage;
+                        this.noMoreData = data.page.totalPage <= data.page.currPage;
+                        this.articleList = data.page.list
+                    }
+                })
+            },
+            listCategory() {
+                let params = {}
+                params.type = 0
+                this.$http({
+                    url: this.$http.adornUrl('/categories'),
+                    method: 'get',
+                    params: this.$http.adornParams(params)
+                }).then(({data}) => {
+                    if (data && data.code === 200) {
+                        this.categoryList = treeDataTranslate(data.categoryList)
+                    }
+                })
+            },
+            filterByMenu(params) {
+                this.resetCurrentPage()
+                this.menuParams = params
+                this.listArticle()
+            },
+            filterByCategory(params) {
+                this.resetCurrentPage()
+                this.categoryId = params
+                this.listArticle()
+            },
+            resetCurrentPage() {
+                this.currentPage = 1
+            },
+            browseMore() {
+                this.currentPage++
+                let params = {
+                    categoryId: this.categoryId,
+                    limit: this.pageSize,
+                    page: this.currentPage
+                }
+                params = merge(params, this.menuParams)
+                this.$http({
+                    url: this.$http.adornUrl('/articles/' + this.userId),
+                    params: this.$http.adornParams(params),
+                    method: 'get'
+                }).then(({data}) => {
+                    if (data && data.code === 200) {
+                        this.noMoreData = data.page.totalPage <= data.page.currPage;
+                        this.articleList = this.articleList.concat(data.page.list)
+                    }
+                }).then(response => {
+                    this.$refs.browseMore.stopLoading()
+                }).catch(error => {
+                    this.$refs.browseMore.stopLoading()
+                    console.log(error)
+                })
+            }
+        },
+        components: {
+            'article-list-header': ArticleListHeader,
+            'article-page-content': ArticlePageContent,
+            'article-page-footer': ArticlePageFooter,
+            'article-list-cell': ArticleListCell,
+            'recommend': Recommend,
+            'tag-wall': TagWall,
+            'browse-more': BrowseMore,
+            'about': About,
+            'hot-read': HotRead
         }
-      })
     }
-  }
-}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .home-content
+  .article-list-content
     width auto
     @media only screen and (max-width: 768px)
       margin 5px 5px 10px 5px
@@ -102,14 +157,16 @@ export default {
     @media screen and (min-width: 1200px)
       width 1200px
       margin 15px auto 0
-      .layout-left, .layout-right
+      margin-bottom 50px
+
+    .layout-left, .layout-right
+      padding 0
+      @media only screen and (max-width: 768px)
         padding 0
-        @media only screen and (max-width: 768px)
-          padding 0
-        @media screen and (min-width: 768px)
-          padding 0
-        @media screen and (min-width: 992px)
-          padding 0 10px
-        @media screen and (min-width: 1200px)
-          padding 0 10px
+      @media screen and (min-width: 768px)
+        padding 0
+      @media screen and (min-width: 992px)
+        padding 0 10px
+      @media screen and (min-width: 1200px)
+        padding 0 10px
 </style>

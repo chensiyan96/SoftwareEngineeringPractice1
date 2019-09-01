@@ -7,6 +7,22 @@ export function isEmail (s) {
 }
 
 /**
+ * 用户名
+ * @param {*} s
+ */
+export function isUsername (s) {
+  return /^[a-zA-Z0-9_\u4E00-\u9FA5\uF900-\uFA2D]{2,20}$/.test(s)
+}
+
+/**
+ * 密码
+ * @param {*} s
+ */
+export function isPassword (s) {
+  return /^(?![\d]+$)(?![a-z]+$)(?![A-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/.test(s)
+}
+
+/**
  * 手机号码
  * @param {*} s
  */

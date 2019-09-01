@@ -13,9 +13,9 @@
       <div class="bottom-area">
         <h4 class="title"><a >{{article.title}}</a></h4>
         <p class="info"><span class="author">By / <a >{{article.author}}</a></span></p>
-        <p class="info"><span class="publish-time">At time / <a >{{article.publish_time}}</a></span></p>
+        <p class="info"><span class="publish-time">At / <a >{{article.updateTime}}</a></span></p>
         <p class="operate_info">
-          <span class="readings"><a > {{article.readings}}次阅读</a></span> |
+          <span class="readings"> {{article.readings}}次阅读</span> |
           <span class="comments"><a > {{article.comments}}个评论</a></span> |
           <span class="likes"><a > {{article.likes}}个喜欢</a></span></p>
       </div>
@@ -28,10 +28,10 @@ export default {
   data () {
     return {
       article: {
-        'id': 1,
+        'articleId': 1,
         'title': '被太阳晒过的风 第四十四章',
         'author': '子夜晨星',
-        'publish_time': '2017/10/22 17:57:08',
+        'updateTime': '2017/10/22 17:57:08',
         'desc': '-1-见了男朋友回来之后喝了一杯没怎么泡好的红糖水和一杯满满的白开水。去上了次厕所，然后坐在床上的时候开始咳嗽不止，去洗了把脸，恍然地瞥见镜子中的自己看起来并不...',
         'readings': '148',
         'comments': '2',

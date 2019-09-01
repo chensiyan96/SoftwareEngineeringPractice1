@@ -6,12 +6,12 @@
     <p class="title">{{article.title}}</p>
     <iv-row>
       <iv-col :xs="24" :sm="10" :md="10" :lg="10" style="padding-left: 0;padding-right: 0;">
-        <p class="info"><span class="author">By / <a >{{article.author}}</a></span><span
-                class="publish-time">  At time / <a >{{article.createTime | socialDate}}</a></span></p>
+        <p class="info"><span class="author">By / <a :href="'/user/' + article.userId">{{article.author}}</a></span><span
+                class="publish-time">  At / {{article.updateTime | socialDate}}</span></p>
       </iv-col>
       <iv-col :xs="24" :sm="14" :md="14" :lg="14" style="padding-left: 0;padding-right: 0;">
         <p class="operate_info">
-          <span class="readings"><a ><iv-icon type="eye"></iv-icon> {{article.readNum}} 阅读</a></span> |
+          <span class="readings"><iv-icon type="eye"></iv-icon> {{article.readNum}} 阅读</span> |
           <span class="likes"><a @click="likePost(article)"><iv-icon type="heart"></iv-icon> {{article.likeNum}} 喜欢</a></span>
         </p>
       </iv-col>
@@ -32,13 +32,15 @@ export default {
   methods: {
     likePost (post) {
       this.$http({
-        url: this.$http.adornUrl('/article/like/' + post.id),
+        url: this.$http.adornUrl('/likeArticle/' + this.article.articleId),
         method: 'put',
         data: this.$http.adornData()
       }).then(({data}) => {
-        if (data && data.code === 200) {
+        if (data && data.success) {
           post.likeNum += 1
           this.$Message.success('点赞成功')
+        }else {
+            this.$Message.error(data.msg)
         }
       }).catch((error) => {
         console.log(error)

@@ -48,6 +48,9 @@ export default {
   @import "../../../common/stylus/theme.styl";
 
   .title-menu-timeline
+    /*border black solid 1px*/
+    /*width 49%*/
+    /*float right*/
     display flex
     ul
       li

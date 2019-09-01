@@ -1,6 +1,6 @@
 <template>
   <div class="common-footer">
-    <p class="copyright">
+    <p class="copyright" >
       {{siteInfo.icp}}
       <span>|</span>
       {{ siteInfo.copyright }}
@@ -13,7 +13,7 @@ export default {
   data () {
     return {
       siteInfo: {
-        icp: '小学期小组',
+        icp: '筒书',
         copyright: '版权所有 © 2019',
       }
     }

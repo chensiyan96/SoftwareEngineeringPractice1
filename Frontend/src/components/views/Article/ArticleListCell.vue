@@ -10,19 +10,19 @@
         <iv-col :xs="24" :sm="24" :md="textSpan" :lg="textSpan" :order="textOrderType" style="padding-left: 0;padding-right: 0;">
           <div class="text-wrapper">
             <h4 class="title">
-              <a :href="'/article/'+article.id">{{article.title}}</a>
+              <a :href="'/article/'+article.articleId">{{article.title}}</a>
               <span class="special" v-if="article.top>0" title="置顶">置顶</span>
             </h4>
             <div class="tags">
               <iv-tag :color="index | mapTagColor" :key="tag.id" type="border" v-for ="(tag , index) in article.tagList">{{tag.name}}</iv-tag>
             </div>
-            <p class="desc">{{article.description | filterHtml | textLineBreak(70) }}<a :href="'/article/'+article.id"> 查看更多
+            <p class="desc">{{article.description | filterHtml | textLineBreak(70) }}<a :href="'/article/'+article.articleId"> 查看更多
               <iv-icon type="arrow-right-b"></iv-icon>
             </a></p>
             <p class="operate_info">
-              <span class="publish-time">发表时间 / <a>{{article.createTime | socialDate}}</a></span>
-              <span class="readings"><a ><iv-icon type="eye"></iv-icon> {{article.readNum}} 阅读</a></span>
-              <span class="likes"><a @click="likePost(article)"><iv-icon type="heart"></iv-icon> {{article.likeNum}} 喜欢</a></span>
+              <span class="publish-time">发表时间 / <a>{{article.updateTime | socialDate}}</a></span>
+              <span class="readings"><iv-icon type="eye"></iv-icon> {{article.readNum}} 阅读</span>
+              <span class="likes"><iv-icon type="heart"></iv-icon> {{article.likeNum}} 喜欢</span>
             </p>
           </div>
         </iv-col>
@@ -180,7 +180,7 @@ export default {
                 color $color-main-primary
                 text-decoration underline
       .img-wrapper
-        max-height: 100%
+        max-height: 155px
         max-width: 100%
         overflow hidden
         &.big-image
