@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.LoveMapper">
+
+    <select id="getLikeCountByUserId" resultType="int">
+        select count(*) from `Love` where userId = #{userId}
+    </select>
+    <select id="getLikeCountByArticleId" resultType="int">
+        select count(*) from `Love` where articleId = #{articleId}
+    </select>
+    <select id="isRecordExist" resultType="boolean">
+        select count(*) from `Love` where userId = #{userId} and articleId = #{articleId}
+    </select>
+
+</mapper>

@@ -2,4 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.UserMapper">
 
+    <select id="isEmailExist" resultType="boolean">
+        select count(*) from `user` where email = #{email}
+    </select>
+
+    <select id="isUsernameExist" resultType="boolean">
+        select count(*) from `user` where username = #{username}
+    </select>
+
+    <select id="recommendUsers" resultType="com.example.demo.model.User">
+        select * from `user` u order by
+        (
+            select count(*) as c from love l where l.articleId in
+            (
+                select articleId from `article` a where u.userId = a.userId
+            )
+        )
+        desc limit 5
+    </select>
+
+    <select id="getLikeNum" resultType="int">
+        select count(*) as c from love l where l.articleId in
+        (
+            select articleId from `article` a where a.userId = #{userId}
+        )
+    </select>
+
+    <select id="getArticleNum" resultType="int">
+        select count(*) from `article` where userId = #{userId}
+    </select>
+
 </mapper>

@@ -3,15 +3,16 @@ package com.example.demo.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
-@Slf4j
 public class JSONUtils {
 
     public static String successResponse() throws JSONException {
@@ -34,32 +35,27 @@ public class JSONUtils {
         return response.toString();
     }
 
+    @NotNull
+    public static <T extends JSONModel> List<JSONObject> arrayToJSONs(@NotNull List<T> ts) throws JSONException {
+        List<JSONObject> res = new ArrayList<>();
+        for (T t : ts) {
+            res.add(t.toJSON());
+        }
+        return res;
+    }
+
     private final static ObjectMapper objMapper = new ObjectMapper();
 
-    /**
-     * Json字符串转化成对象
-     * @param jsonString
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws Exception
-     */
     public static <T> T toObj(String jsonString, Class<T> clazz) {
         objMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         try {
             return objMapper.readValue(jsonString, clazz);
         } catch (IOException e) {
-            log.error("Json字符串转化成对象出错",e);
+            e.printStackTrace();
         }
         return null;
     }
 
-    /**
-     * javaBean 转化成json字符串
-     * @param obj
-     * @return
-     * @throws Exception
-     */
     public static String toJson(Object obj) {
         if(obj instanceof Integer || obj instanceof Long || obj instanceof Float ||
                 obj instanceof Double || obj instanceof Boolean || obj instanceof String){
@@ -68,7 +64,7 @@ public class JSONUtils {
         try {
             return objMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            log.error("转化成json字符串",e);
+            e.printStackTrace();
         }
         return null;
     }

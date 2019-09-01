@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class MailCaptchaService {
 
-    private final String emailFrom = "3365221601@qq.com";
+    private final String emailFrom = "register@tongshu.online";
 
     @Autowired
     private JavaMailSender mailSender;
@@ -27,10 +27,11 @@ public class MailCaptchaService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject("验证码");
-        message.setText("您的验证码为" + captcha_str);
+        message.setText("您好！欢迎注册成为筒书用户，您本次注册的验证码是：" + captcha_str
+                + "，十分钟内有效。如果不是您本人的操作，请忽略此邮件；请勿将验证码告诉他人。");
         message.setFrom(emailFrom);
         mailSender.send(message);
-        stringRedisTemplate.opsForValue().set(to, captcha_str, 5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(to, captcha_str, 10, TimeUnit.MINUTES);
     }
 
     public boolean checkCaptcha(@NotNull String to, @NotNull String captcha_str) {

@@ -39,9 +39,7 @@ public class RedisConfig {
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(1);
         // 文章、图书的缓存默认一天失效
-        redisCacheConfigurationMap.put(RedisCacheName.ARTICLE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1)));
-        redisCacheConfigurationMap.put(RedisCacheName.BOOK, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1)));
-        redisCacheConfigurationMap.put(RedisCacheName.BOOKNOTE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1)));
+        redisCacheConfigurationMap.put(RedisCacheNames.ARTICLE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1)));
         return redisCacheConfigurationMap;
     }
 
