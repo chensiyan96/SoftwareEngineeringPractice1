@@ -2,4 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.CommentMapper">
 
+    <resultMap id="BaseResultMap" type="com.example.demo.model.Comment">
+        <id column="commentId" property="commentId" />
+        <result column="userId" property="userId" />
+        <result column="articleId" property="articleId" />
+        <result column="parentId" property="parentId" />
+        <result column="content" property="content" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+    <select id="queryCommentByArticle" resultType="com.example.demo.model.CommentVO">
+        select * from comment
+        <where>
+            articleId = #{articleId}
+        </where>
+        order by createTime asc
+    </select>
+
+    <select id="queryCommentByParentId" resultType="com.example.demo.model.Comment">
+        select * from comment
+        <where>
+            parentId = #{parentId}
+        </where>
+        order by createTime asc
+    </select>
 </mapper>

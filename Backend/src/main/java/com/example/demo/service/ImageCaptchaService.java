@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.google.code.kaptcha.Producer;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -31,6 +32,8 @@ public class ImageCaptchaService {
         return check_pass;
     }
 
+    @NotNull
+    @Contract(pure = true)
     private static String genRedisKey(@NotNull String uuid){
         return "img" + uuid;
     }

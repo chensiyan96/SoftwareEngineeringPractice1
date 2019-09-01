@@ -155,12 +155,12 @@
             <artifactId>commons-pool2</artifactId>
             <version>${redis.pool.version}</version>
         </dependency>
-<!--        &lt;!&ndash; elasticsearch搜索层包&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
-<!--            <version>${springboot.version}</version>-->
-<!--        </dependency>-->
+        <!-- elasticsearch搜索层包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
         <!--消息队列包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

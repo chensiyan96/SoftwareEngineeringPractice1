@@ -1,4 +1,23 @@
 spring:
+  mail:
+    host: smtp.mxhichina.com
+    username: register@tongshu.online
+    password: Buaa1721
+    default-encoding: UTF-8
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -46,7 +65,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 47.94.106.116:9300
+      cluster-nodes: localhost:9300
   # rabbitMQ配置
   rabbitmq:
     host: 127.0.0.1
@@ -77,12 +96,12 @@ mybatis-plus:
 
 oss:
   qiniu:
-    domain: http://oss.dblearn.cn
-    prefix: dbblog
-    accessKey: ENC(pVGOa/io1AnqiEKkDTVORO3W8nzn+vbOl53TeRBIGgCuWvqUEzOAdIBLmdpoYVmsDHESGVc2QzY=)
-    secretKey: ENC(UXM3TEuaIuLrPdKuDASHoZExQyOrgGl7PqV/iB0EbHOFhnUSF3bMol8D2qh+QlthccS5QD0fHbM=)
-    bucketName: test
+    domain: http://px1hmc48v.bkt.clouddn.com
+    prefix: TongShuBlog
+    accessKey: cwvltxo-k0gxC-T3RhtF85j1E8UA-iVMzDqeS97W
+    secretKey: WFc9GTfNVscKlgM7TrQnptfgPKhA1yhwwyWCXLLZ
+    bucketName: tongshuimage
 
 jasypt:
   encryptor:
-    password: dbblog-jasypt
+    password: TongShuBlog-jasypt

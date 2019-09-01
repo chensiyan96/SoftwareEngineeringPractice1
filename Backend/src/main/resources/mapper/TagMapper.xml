@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TagMapper">
+
+    <delete id="deleteTagLink">
+        delete from tag_link
+        where tag_link.linkId = #{linkId} and tag_link.type = #{type}
+    </delete>
+
+    <select id="listByLinkId" resultType="com.example.demo.model.Tag">
+        select tag.* from tag left join tag_link on tag.id=tag_link.tagId
+        <where>
+            <if test="linkId!=null">
+                and tag_link.linkId = #{linkId}
+            </if>
+        </where>
+    </select>
+
+    <select id="listTagVo" resultType="com.example.demo.model.TagVO">
+        select t.name ,sum(t.num) as linkNum from (
+          select distinct t.name, (select count(*) from tag_link tl2 where tl2.tagId = t.id) as num
+          from tag t
+          left join tag_link tl on t.id = tl.tagId) t
+        group by t.name
+    </select>
+
+    <select id="listByUserId" resultType="com.example.demo.model.TagVO">
+        select t.name ,sum(t.num) as linkNum from (
+          select distinct t.name, (select count(*) from tag_link tl2 where tl2.tagId = t.id) as num
+          from tag t
+          left join tag_link tl on t.id = tl.tagId where t.userId = #{userId}) t
+        group by t.name
+    </select>
+
+</mapper>
